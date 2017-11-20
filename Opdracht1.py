@@ -20,8 +20,10 @@ def main():
         print ("Het zoekwoord", zoekwoord," komt niet voor in de één van de headers, probeer nog een keer.")
         main()
     except IndexError:
-        print ("U heeft een bestand gekozen zonder DNA probeer opnieuw")
+        print ("U heeft een bestand gekozen dat geen DNA sequentie bevat, probeer het opnieuw")
         main()
+    except TypeError:
+        pass
         
 def lees_inhoud(bestand):
     try:
