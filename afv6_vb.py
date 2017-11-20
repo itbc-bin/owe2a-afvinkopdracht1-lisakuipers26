@@ -1,11 +1,4 @@
-# Naam:
-# Datum:
-# Versie:
-
-# Opmerking: Het alpaca bestand is erg groot! Neem eerst een klein proefstukje van het bestand, met 5 tot 10 fasta's. Ga je runnen met het echte bestand, geef je programma dan even de tijd.
-
 def main():
-    
     bestand = (input("Geef naam van het bestand van de sequenties: "))+".fa"
     headers, seqs = lees_inhoud(bestand)
     
@@ -21,12 +14,8 @@ def main():
                 print("Sequentie is geen DNA. Er is iets fout gegaan.")
     
 def lees_inhoud(bestand):
-    
     try:
-    
         bestand = open(bestand)   
-    
-    
         headers = []
         seqs = []
         seq = ""
@@ -41,15 +30,24 @@ def lees_inhoud(bestand):
                 seq += line.strip()
         seqs.append(seq)
 
-        
-            
-        return headers, seqs
-    except FileNotFoundError:
-        print("Het bestand staat niet in de map of geef een andere naam op.")
+        if ">" in headers[0]:
+            return headers, seqs
+        else:
+            raise IndexError
+
+    except IndexError:
+        print ("-"*80)
+        print("Het is geen fasta bestand.")
+        print("Controleer of het bestand wat je opgegeven hebt een fasta bestand is of geef een andere naam op.")
+        print (" ")
         main()
-    
-
-
+    except FileNotFoundError:
+        print ("-"*80)
+        print("Het bestand staat niet in de map of geef een andere naam op.")
+        print (" ")
+        main()
+        
+        
     
 def is_dna(seq):
     dna = False
@@ -62,9 +60,8 @@ def is_dna(seq):
         dna = True
     return dna
 
-# bij deze functie kan je een deel van de code die je de afgelopen 2 afvinkopdrachten geschreven hebt herbruiken
 def knipt(alpaca_seq):
-        bestand_1 = (input ("Geef naam van bestand met de knipenzymen op: ")) + ".txt"
+        bestand_1 = (input ("Geef naam van bestand met de knip enzymen op: ")) + ".txt"
         bestand = open(bestand_1)
         for line in bestand:
             naam, seq = line.split(" ")
